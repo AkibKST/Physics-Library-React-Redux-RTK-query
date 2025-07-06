@@ -1,4 +1,3 @@
-import { AddBookModal } from "@/components/modules/Book/AddBookModal";
 import BookCard from "@/components/modules/Book/BookCard";
 import Container from "@/components/ui/container";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,32 +25,13 @@ export default function Books() {
               <TabsTrigger value="low">Low</TabsTrigger>
             </TabsList>
           </Tabs>
-
-          <AddBookModal />
         </div>
       </div>
 
-      <div className="space-y-5 mt-5">
-        {data?.data.length === 0 && (
-          <div className="text-center mt-10 text-xl">Nothing to see here</div>
-        )}
-        {/* {tasks
-          .filter((task) => task.isCompleted === false)
-          .map((task: ITodo) => (
-            <TaskCard task={task} />
-          ))} */}
-        {/* {tasks.some((task) => task.isCompleted === true) && (
-          <div className="flex gap-5 items-center">
-            <div className="border-b border-default h-[1px] w-full" />
-            <p className="text-default/10">Completed</p>
-            <div className="border-b border-default h-[1px] w-full" />
-          </div>
-        )} */}
-        {data?.data
-          .filter((book: IBooks) => book.available === true)
-          .map((book: IBooks) => (
-            <BookCard book={book} />
-          ))}
+      <div className="space-y-5 mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data?.data.map((book: IBooks) => (
+          <BookCard book={book} key={book._id} />
+        ))}
       </div>
     </Container>
   );

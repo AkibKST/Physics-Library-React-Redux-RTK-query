@@ -2,8 +2,9 @@ import App from "@/App";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Books from "@/pages/Books";
-import Users from "@/pages/Users";
 import { createBrowserRouter } from "react-router-dom";
+import { AddBookModal } from "@/components/modules/Book/AddBookModal";
+import BorrowSummary from "@/components/modules/Borrow/BorrowSummary";
 
 export const routes = createBrowserRouter([
   {
@@ -15,8 +16,12 @@ export const routes = createBrowserRouter([
         element: <Books />,
       },
       {
-        path: "/users",
-        element: <Users />,
+        path: "/create-book",
+        element: <AddBookModal />,
+      },
+      {
+        path: "/borrow-summary",
+        element: <BorrowSummary />,
       },
     ],
   },

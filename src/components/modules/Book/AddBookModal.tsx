@@ -12,35 +12,46 @@ import {
 // import { addTask } from "@/redux/features/todo/todoSlice";
 // import { useAppDispatch } from "@/redux/hooks";
 import { Plus } from "lucide-react";
-import TMDatePicker from "../../form/TMDatePicker";
 import TMForm from "../../form/TMForm";
 import TMInput from "../../form/TMInput";
 import TMSelect from "../../form/TMSelect";
 import TMTextarea from "../../form/TMTextArea";
+import type { IBooks } from "@/types";
+import type { FieldValues, SubmitHandler } from "react-hook-form";
+import { useCreateBookMutation } from "@/redux/api/baseApi";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
-const priorityOptions = [
-  { value: "high", label: "High" },
-  { value: "medium", label: "Medium" },
-  { value: "low", label: "Low" },
+// eslint-disable-next-line react-refresh/only-export-components
+export const genreOptions = [
+  { value: "FANTASY", label: "FANTASY" },
+  { value: "SCIENCE", label: "SCIENCE" },
+  { value: "HISTORY", label: "HISTORY" },
+  { value: "BIOGRAPHY", label: "BIOGRAPHY" },
+  { value: "MYSTERY", label: "MYSTERY" },
+  { value: "ROMANCE", label: "ROMANCE" },
+  { value: "FICTION", label: "FICTION" },
 ];
 
 export function AddBookModal() {
-  // const dispatch = useAppDispatch();
+  const [createBook] = useCreateBookMutation();
 
-  // const handleSubmit: SubmitHandler<FieldValues> = (data) => {
-  //   console.log(data);
-  //   const taskData: ITodo = {
-  //     _id: uuid(),
-  //     title: data.title,
-  //     description: data.description,
-  //     priority: data.priority,
-  //     dueDate: new Date(data.dueDate).toISOString(),
-  //     isCompleted: false,
-  //     member: data.member,
-  //   };
+  // console.log("Data:", data);
 
-  // dispatch(addTask(taskData));
-  // };
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const bookData: Partial<IBooks> = {
+      title: data.title,
+      description: data.description,
+      genre: data.genre,
+      author: data.author,
+      isbn: data.isbn,
+      copies: Number(data.copies),
+      available: true,
+    };
+
+    await createBook(bookData).unwrap();
+
+    // console.log("inside handleSubmit", res);
+  };
 
   return (
     <Dialog>
@@ -50,21 +61,18 @@ export function AddBookModal() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        {/* <TMForm className="space-y-3" onSubmit={handleSubmit}> */}
-        <TMForm className="space-y-3" onSubmit={() => {}}>
+        <TMForm className="space-y-3" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add Book</DialogTitle>
           </DialogHeader>
 
           <TMInput name="title" label="Title" />
-          <TMTextarea name="description" label="Title" />
-          <TMSelect
-            name="priority"
-            label="Priority"
-            options={priorityOptions}
-          />
-          <TMSelect name="member" label="member" options={priorityOptions} />
-          <TMDatePicker name="dueDate" label="Due Date" />
+          <TMInput name="author" label="Author" />
+          <TMTextarea name="description" label="Description" />
+          <DialogDescription></DialogDescription>
+          <TMSelect name="genre" label="Genre" options={genreOptions} />
+          <TMInput name="isbn" label="ISBN" />
+          <TMInput name="copies" label="Copies" />
 
           <DialogFooter>
             <DialogClose asChild>

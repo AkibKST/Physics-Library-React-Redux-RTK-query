@@ -1,6 +1,7 @@
 import Logo from "@/assets/Logo";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "../ui/moodToggler";
+import { AddBookModal } from "../modules/Book/AddBookModal";
 
 export default function Navbar() {
   return (
@@ -8,12 +9,15 @@ export default function Navbar() {
       <Link to="/" className="text-xl flex">
         <Logo /> <span className="font-bold ml-2 pr-1">Physics</span>Library
       </Link>
-      <Link className="hover:underline" to="/">
-        Books
-      </Link>
-      <Link className="hover:underline" to="/users">
-        Borrow Summary
-      </Link>
+      <div className="mx-auto space-x-5">
+        <Link className="hover:underline" to="/">
+          All Book
+        </Link>
+        <Link className="hover:underline" to="/borrow-summary">
+          Borrow Summary
+        </Link>
+        <AddBookModal />
+      </div>
       <div className="ml-auto">
         <ModeToggle />
       </div>

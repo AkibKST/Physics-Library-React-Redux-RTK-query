@@ -1,10 +1,19 @@
-import { UpdateTaskModal } from "@/components/modules/Book/UpdateTaskModal";
+import { UpdateBookModal } from "@/components/modules/Book/UpdateBookModal";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+// import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 import { type IBooks } from "@/types";
-import { Trash2 } from "lucide-react";
+import { Trash2, View } from "lucide-react";
+import { BorrowModal } from "../Borrow/BorrowModal";
 
 interface IProps {
   book: IBooks;
@@ -13,26 +22,50 @@ interface IProps {
 export default function BookCard({ book }: IProps) {
   // const dispatch = useAppDispatch();
   return (
-    <div className="border px-5 py-3 rounded-md ">
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2 items-center">
-          {/* <div
-            className={cn("size-3 rounded-full", {
-              "bg-green-500": task.priority === "low",
-              "bg-yellow-500": task.priority === "medium",
-              "bg-red-500": task.priority === "high",
-            })}
-          ></div> */}
-          <h1
-            className={cn("text-xl", {
-              "line-through": book.available,
-            })}
-          >
-            {book.title}
-          </h1>
+    <Card>
+      <CardHeader>
+        <h1
+          className={cn("text-xl", {
+            "line-through": !book.available,
+          })}
+        >
+          {book.title}
+        </h1>
+      </CardHeader>
+
+      <CardDescription>
+        <p className="mt-5">{book?.description}</p>
+      </CardDescription>
+      <CardContent className="flex flex-col text-left gap-2">
+        <div>
+          <span>Author: </span>
+          {book?.author}
         </div>
-        <div className="flex gap-3 items-center">
-          <UpdateTaskModal book={book} />
+
+        <div>
+          <span>ISBN: </span>
+          {book?.isbn}
+        </div>
+
+        <div>
+          <span>GENRE: </span>
+          {book?.genre}
+        </div>
+
+        <div>
+          <span>Copies: </span>
+          {book?.copies}
+        </div>
+      </CardContent>
+      <CardFooter>
+        <div>
+          <span>Status: </span>
+          {book?.available ? "Available" : "Not Available"}
+        </div>
+      </CardFooter>
+      <CardAction className="mx-auto">
+        <div className="flex gap-3 justify-between">
+          <UpdateBookModal book={book} />
           <Button
             // onClick={() => dispatch(deleteTask(task._id))}
             variant="link"
@@ -40,13 +73,13 @@ export default function BookCard({ book }: IProps) {
           >
             <Trash2 />
           </Button>
-          <Checkbox
-            checked={book.available}
-            // onCheckedChange={() => dispatch(toggleCompleteState(task._id))}
-          />
+          <Button variant="link">
+            <View></View>
+          </Button>
+
+          <BorrowModal book={book} />
         </div>
-      </div>
-      <p className="mt-5">{book?.description}</p>
-    </div>
+      </CardAction>
+    </Card>
   );
 }
