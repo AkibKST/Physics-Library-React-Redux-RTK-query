@@ -6,6 +6,18 @@
 
 A modern library management system built with React, TypeScript, and Redux Toolkit.
 
+## Deploy link:
+
+# frontend: physics-library-management-system-f.vercel.app
+
+# backend: library-management-system-five-drab.vercel.app
+
+## Github repository link:
+
+# frontend: github.com/AkibKST/Physics-Library-React-Redux-RTK-query
+
+# backend: github.com/AkibKST/Library_Management_Server
+
 ## Features
 
 - **Book Management** (CRUD operations)
