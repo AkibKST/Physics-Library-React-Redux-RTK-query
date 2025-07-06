@@ -5,6 +5,7 @@ import Books from "@/pages/Books";
 import { createBrowserRouter } from "react-router-dom";
 import { AddBookModal } from "@/components/modules/Book/AddBookModal";
 import BorrowSummary from "@/components/modules/Borrow/BorrowSummary";
+import { BookDetails } from "@/components/modules/Book/BookDetailsPage";
 
 export const routes = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const routes = createBrowserRouter([
       {
         path: "/borrow-summary",
         element: <BorrowSummary />,
+      },
+      {
+        path: "/books/:id",
+        element: <BookDetails />,
       },
     ],
   },

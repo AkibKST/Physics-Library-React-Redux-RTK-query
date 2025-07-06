@@ -20,6 +20,7 @@ import {
   useUpdateBookMutation,
 } from "@/redux/api/baseApi";
 import type { IBooks } from "@/types";
+import Swal from "sweetalert2";
 
 export function BorrowModal({ book }: { book: IBooks }) {
   const [borrowBook] = useBorrowBookMutation();
@@ -42,6 +43,12 @@ export function BorrowModal({ book }: { book: IBooks }) {
       _id: book._id,
       available: book.copies - Number(data.quantity) > 0,
       copies: book.copies - Number(data.quantity),
+    });
+
+    Swal.fire({
+      title: "Book Borrowed Successfully!",
+      text: "Your book has been borrowed.",
+      icon: "success",
     });
   };
 

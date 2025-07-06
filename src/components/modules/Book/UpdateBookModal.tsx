@@ -14,27 +14,16 @@ import type { FieldValues, SubmitHandler } from "react-hook-form";
 import TMInput from "../../form/TMInput";
 import TMForm from "../../form/TMForm";
 import TMTextarea from "../../form/TMTextArea";
-// import TMSelect from "../../form/TMSelect";
-// import TMDatePicker from "../../form/TMDatePicker";
-// import { useAppDispatch } from "@/redux/hooks";
-// import { updateTask } from "@/redux/features/todo/todoSlice";
 import { type IBooks } from "@/types";
 import TMSelect from "@/components/form/TMSelect";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { genreOptions } from "./AddBookModal";
 import { useUpdateBookMutation } from "@/redux/api/baseApi";
-import { useParams } from "react-router-dom";
-// import { v4 as uuid } from "uuid";
-
-// const priorityOptions = [
-//   { value: "high", label: "High" },
-//   { value: "medium", label: "Medium" },
-//   { value: "low", label: "Low" },
-// ];
+import Swal from "sweetalert2";
 
 export function UpdateBookModal({ book }: { book: IBooks }) {
   const [updateBook] = useUpdateBookMutation();
-  const param = useParams();
+  // const param = useParams();
 
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
     const bookData: Partial<IBooks> = {
@@ -47,8 +36,13 @@ export function UpdateBookModal({ book }: { book: IBooks }) {
       available: true,
     };
 
-    const res = await updateBook({ ...bookData, _id: param.id }).unwrap();
-    console.log("Book updated successfully:", res);
+    await updateBook({ ...bookData, _id: book._id }).unwrap();
+
+    Swal.fire({
+      title: "Book Updated Successfully!",
+      text: "Your book has been updated.",
+      icon: "success",
+    });
   };
 
   return (

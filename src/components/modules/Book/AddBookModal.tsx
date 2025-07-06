@@ -20,6 +20,7 @@ import type { IBooks } from "@/types";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import Swal from "sweetalert2";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const genreOptions = [
@@ -49,6 +50,11 @@ export function AddBookModal() {
     };
 
     await createBook(bookData).unwrap();
+    Swal.fire({
+      title: "Book Created Successfully!",
+      text: "Your book has been created.",
+      icon: "success",
+    });
 
     // console.log("inside handleSubmit", res);
   };
