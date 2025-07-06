@@ -18,12 +18,13 @@ import {
 } from "lucide-react";
 import { useGetBookByIdQuery } from "@/redux/api/baseApi";
 import { useParams } from "react-router-dom";
-import type { IBooks } from "@/types";
 
 export function BookDetails() {
   const param = useParams();
   const { data } = useGetBookByIdQuery(param.id as string);
-  const bookData: IBooks = data?.data as IBooks;
+  console.log("BookDetails data:", data);
+
+  const bookData = data?.data;
 
   return (
     <div className="grid gap-6 p-10 my-8">

@@ -12,7 +12,7 @@ export const baseApi = createApi({
       query: () => "/books",
       providesTags: ["Book"],
     }),
-    getBookById: builder.query<IBooks, string>({
+    getBookById: builder.query({
       query: (id) => `/books/${id}`,
       providesTags: ["Book"],
     }),
